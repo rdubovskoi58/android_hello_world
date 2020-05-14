@@ -43,8 +43,14 @@ jobs:
         run: bash ./gradlew assembleDebug --stacktrace
       
       - name: Check APK vulnerabilities
-        run: /home/runner/.local/bin/qark --apk app/build/outputs/apk/debug/app-debug.apk
+        run: /home/runner/.local/bin/qark --apk app/build/outputs/apk/debug/app-debug.apk && ls -l /home/runner/.local/lib/python2.7/site-packages/qark/report/
       
+      - name: Upload qark report
+        uses: actions/upload-artifact@v1
+        with:
+          name: report
+          path: /home/runner/.local/lib/python2.7/site-packages/qark/report/report.html
+
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
