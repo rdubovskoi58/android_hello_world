@@ -37,7 +37,7 @@ jobs:
 #           java-version: 1.8
      
       - name: Install dependencies
-        run: pip install qark && qark
+        run: pip install qark && find ~  -name qark
       
 #       - name: Build debug APK
 #         run: bash ./gradlew assembleDebug --stacktrace
