@@ -29,30 +29,36 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v1
+#       - uses: actions/checkout@v1
       
-      - name: set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
+#       - name: set up JDK 1.8
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 1.8
      
-      - name: Install dependencies
-        run: pip install qark && /home/runner/.local/bin/qark --version
-      
-      - name: Build debug APK
-        run: bash ./gradlew assembleDebug --stacktrace
-      
-      - name: Check APK vulnerabilities
-        run: /home/runner/.local/bin/qark --apk app/build/outputs/apk/debug/app-debug.apk && ls -l /home/runner/.local/lib/python2.7/site-packages/qark/report/
-      
-      - name: Upload qark report
-        uses: actions/upload-artifact@v1
-        with:
-          name: report
-          path: /home/runner/.local/lib/python2.7/site-packages/qark/report/report.html
+#       - name: Install dependencies
+#         run: pip install qark && /home/runner/.local/bin/qark --version
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v1
-        with:
-          name: app
-          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Install dependencies
+        run: |
+          git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
+          cd Mobile-Security-Framework-MobSF
+          ./setup.sh
+
+#       - name: Build debug APK
+#         run: bash ./gradlew assembleDebug --stacktrace
+      
+#       - name: Check APK vulnerabilities
+#         run: /home/runner/.local/bin/qark --apk app/build/outputs/apk/debug/app-debug.apk && ls -l /home/runner/.local/lib/python2.7/site-packages/qark/report/
+      
+#       - name: Upload qark report
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: report
+#           path: /home/runner/.local/lib/python2.7/site-packages/qark/report/report.html
+
+#       - name: Upload APK
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: app
+#           path: app/build/outputs/apk/debug/app-debug.apk
