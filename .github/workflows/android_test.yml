@@ -57,7 +57,13 @@ jobs:
           && curl -X POST --url http://localhost:8000/api/v1/scan --data "scan_type=apk&file_name=${APP_NAME}&hash=${APP_HASH}" -H "Authorization:${MOBSF_API_KEY}" \
           && curl -X POST --url http://localhost:8000/api/v1/download_pdf --data "hash=${APP_HASH}" -H "Authorization:${MOBSF_API_KEY}" > report.pdf
   
-      - name: Upload qark report
+      - name: Upload MobSF log
+        uses: actions/upload-artifact@v1
+        with:
+          name: MobSF_log
+          path: Mobile-Security-Framework-MobSF/logs/debug.log
+      
+      - name: Upload MobSF report
         uses: actions/upload-artifact@v1
         with:
           name: report
