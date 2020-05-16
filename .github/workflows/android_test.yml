@@ -58,13 +58,12 @@ jobs:
           curl -X POST --url http://localhost:8000/api/v1/scan --data "scan_type=apk&file_name=${APP_NAME}&hash=${APP_HASH}" -H "Authorization:${MOBSF_API_KEY}"
           sleep 1
           curl -X POST --url http://localhost:8000/api/v1/download_pdf --data "hash=${APP_HASH}" -H "Authorization:${MOBSF_API_KEY}" > ~/report.pdf
-          kill `ps aux | grep gunicorn | awk '{print $2}' | head -1`
   
       - name: Upload qark report
         uses: actions/upload-artifact@v1
         with:
           name: report
-          path: report.pdf
+          path: ~/report.pdf
 
       - name: Upload APK
         uses: actions/upload-artifact@v1
