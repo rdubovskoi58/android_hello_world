@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     name: Run Unit Tests
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -39,7 +39,7 @@ jobs:
   
       - name: Install and run MobSF
         run: |
-          sudo apt-get update && sudo apt-get install -yq python3.7 python3.7-dev python3.7-venv python3-pip build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf
+          sudo apt-get update && sudo apt-get install -yq build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf
           python3.7 -m pip install pip
           git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
           cd Mobile-Security-Framework-MobSF
