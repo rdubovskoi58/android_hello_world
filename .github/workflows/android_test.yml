@@ -22,8 +22,6 @@ jobs:
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
 
-
-
   apk:
     name: Generate APK
     runs-on: ubuntu-18.04
@@ -38,20 +36,23 @@ jobs:
      
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
-      
-      - name: Check APK vulnerabilities
+  
+      - name: Install and run MobSF
         run: |
           sudo apt-get update && sudo apt-get install -yq python3-dev python3-venv python3-pip build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf
           git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
+          cd Mobile-Security-Framework-MobSF
+          ./setup.sh 2>&1 | grep REST | awk '{print $4}'| tail -1 > .api_key
+          ./run.sh &
+      
+      - name: Check APK vulnerabilities
+        run: |
           set -x
           APP_NAME=app-debug.apk
           APP_PATH="app/build/outputs/apk/debug/${APP_NAME}"
           APP_HASH=`md5sum $APP_PATH | awk '{print $1}'`
-          cd Mobile-Security-Framework-MobSF
-          MOBSF_API_KEY=`./setup.sh 2>&1 | grep REST | awk '{print $4}'| tail -1`
-          ./run.sh &
-          cd ..
-          sleep 15
+          MOBSF_API_KEY=`cat Mobile-Security-Framework-MobSF/.api_key`
+          sleel 10
           curl -F 'file=@'"${APP_PATH}" http://localhost:8000/api/v1/upload -H "Authorization:${MOBSF_API_KEY}"
           sleep 1
           curl -X POST --url http://localhost:8000/api/v1/scan --data "scan_type=apk&file_name=${APP_NAME}&hash=${APP_HASH}" -H "Authorization:${MOBSF_API_KEY}"
