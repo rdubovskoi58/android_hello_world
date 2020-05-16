@@ -50,7 +50,7 @@ jobs:
           cd Mobile-Security-Framework-MobSF
           MOBSF_API_KEY=`./setup.sh 2>&1 | grep REST | awk '{print $4}'| tail -1`
           ./run.sh &
-          sleep 1
+          sleep 10
           cd ..
           curl -F 'file=@'"${APP_PATH}" http://localhost:8000/api/v1/upload -H "Authorization:${MOBSF_API_KEY}"
           sleep 1
