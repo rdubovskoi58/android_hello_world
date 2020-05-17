@@ -39,7 +39,7 @@ jobs:
   
       - name: Install and run MobSF
         run: |
-          sudo apt-get update && sudo apt-get install -yq python3-venv build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf
+          sudo apt-get update && sudo apt-get install -yq python3-venv python3.7-venv build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf
           python3.7 -m pip install --user --upgrade pip
           sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
           sudo update-alternatives --install /usr/bin/python3 python3 `which python3.7` 2
