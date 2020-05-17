@@ -9,18 +9,18 @@ on:
       - 'master'
 
 jobs:
-  test:
-    name: Run Unit Tests
-    runs-on: ubuntu-latest
+#   test:
+#     name: Run Unit Tests
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v1
-      - name: set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      - name: Unit tests
-        run: bash ./gradlew test --stacktrace
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: set up JDK 1.8
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 1.8
+#       - name: Unit tests
+#         run: bash ./gradlew test --stacktrace
 
   apk:
     name: Generate APK
@@ -39,9 +39,11 @@ jobs:
   
       - name: Install and run MobSF
         run: |
-          sudo apt-get update && sudo apt-get install -yq python3.7 python3-dev python3-venv python3-pip build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf
+          sudo apt-get update && sudo apt-get install -yq python3-venv build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf
           python3.7 -m pip install --user --upgrade pip
-          sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 
+          sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+          sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 2
+          sudo update-alternatives  --set python3 /usr/bin/python3.7
           git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
           cd Mobile-Security-Framework-MobSF
           ./setup.sh 2>&1 | grep REST | awk '{print $4}'| tail -1 > .api_key
