@@ -73,3 +73,9 @@ jobs:
         with:
           name: app
           path: app/build/outputs/apk/debug/app-debug.apk
+      
+      - name: Upload MobSF log
+        uses: actions/upload-artifact@v1
+        with:
+          name: MobSF_log
+          path: Mobile-Security-Framework-MobSF/logs/debug.log
