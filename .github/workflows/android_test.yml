@@ -47,7 +47,8 @@ jobs:
           git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
           cd Mobile-Security-Framework-MobSF
           ./setup.sh 2>&1 | grep REST | awk '{print $4}'| tail -1 > .api_key
-          ./run.sh &
+          #./run.sh &
+          . venv/bin/activate && python manage.py runserver
       
 #       - name: Check APK vulnerabilities
 #         run: |
